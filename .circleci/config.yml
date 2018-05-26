@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:trusty
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get -y install build-essential
+      - run: sudo apt-get -y install libelf-dev
+      - run: sudo apt-get -y install wget
+      - run: sudo apt-get -y install unzip
+      - run: make conf="" full
+  build-check:
+    docker:
+      - image: ubuntu:trusty
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get -y install build-essential
+      - run: sudo apt-get -y install libelf-dev
+      - run: sudo apt-get -y install wget
+      - run: sudo apt-get -y install unzip
+      - run: make conf="--check" full
+  build-test:
+    docker:
+      - image: ubuntu:trusty
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get -y install build-essential
+      - run: sudo apt-get -y install libelf-dev
+      - run: sudo apt-get -y install wget
+      - run: sudo apt-get -y install unzip
+      - run: make conf="--test" full
+  build-clean:
+    docker:
+      - image: ubuntu:trusty
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get -y install build-essential
+      - run: sudo apt-get -y install libelf-dev
+      - run: sudo apt-get -y install wget
+      - run: sudo apt-get -y install unzip
+      - run: make conf="--clean" full
+workflows:
+  version: 2
+  level_builds:
+    jobs:
+      - build
+      - build-check
+      - build-test
+      - build-clean
+
